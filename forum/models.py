@@ -7,6 +7,9 @@ class Forum(models.Model):
     name = models.CharField(max_length=24, unique=True)
     description = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
 
 class Topic(models.Model):
     """class representing topic under a forum"""
