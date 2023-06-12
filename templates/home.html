@@ -1,38 +1,31 @@
-{% load static %}<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Forum</title>
-        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    </head>
-    <body>
-    <div class="container">
-        <ol class="breadcrumb my-4">
-            <li class="breadcrumb-item active">Forum</li>
-        </ol>
-        <table class="table">
-            <thead class="thead-inverse">
+{% extends 'base.html' %}
+
+{ % block breadcrumb %}
+    <li class="breadcrumb-item active">Forum</li>
+{% endblock %}
+
+{% block content %}
+    <table class="table">
+    <thead class="thead-inverse">
+            <tr>
+                <th>Forum</th>
+                <th>Posts</th>
+                <th>Topics</th>
+                <th>Most Previous Post</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for forum in forums %}
                 <tr>
-                    <th>Forum</th>
-                    <th>Posts</th>
-                    <th>Topics</th>
-                    <th>Most Previous Post</th>
+                    <td>
+                        <a href="{% url 'forum_topics' forum.pk %}">{{ forum.name }}</a>
+                        <small class="text-muted d-block">{{ forum.description }}</small>
+                    </td>
+                    <td class="align-middle">0</td>
+                    <td class="align-middle">0</td>
+                    <td></td>
                 </tr>
-            </thead>
-            <tbody>
-                {% for forum in forums %}
-                    <tr>
-                        <td>
-                            <a href="{% url 'forum_topics' forum.pk %}">{{ forum.name }}</a>
-                            <small class="text-muted d-block">{{ forum.description }}</small>
-                        </td>
-                        <td class="align-middle">0</td>
-                        <td class="align-middle">0</td>
-                        <td></td>
-                    </tr>
-                {% endfor %}
-            </tbody>       
-        </table>
-    </div>
-    </body>
-</html>
+            {% endfor %}
+        </tbody>       
+    </table>
+{% endblock %}
