@@ -3,33 +3,36 @@
     <head>
         <meta charset="utf-8">
         <title>Forum</title>
-        <link rel="stylesheet" href="{% static 'css/bootsrap.min.css' %}">"
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     </head>
     <body>
-        <h1>Forum</h1>
-
-        <table border="1">
-            <thead>
+    <div class="container">
+        <ol class="breadcrumb my-4">
+            <li class="breadcrumb-item active">Forum</li>
+        </ol>
+        <table class="table">
+            <thead class="thead-inverse">
                 <tr>
                     <th>Forum</th>
                     <th>Posts</th>
                     <th>Topics</th>
-                    <th>Last Post</th>
+                    <th>Most Previous Post</th>
                 </tr>
             </thead>
             <tbody>
                 {% for forum in forums %}
                     <tr>
                         <td>
-                            {{ forum.name }}<br>
-                            <small style="color": #888>{{ forum.description }}</small>
+                            {{ forum.name }}
+                            <small class="text-muted d-block">{{ forum.description }}</small>
                         </td>
-                        <td>0</td>
-                        <td>0</td>
+                        <td class="align-middle">0</td>
+                        <td class="align-middle">0</td>
                         <td></td>
                     </tr>
                 {% endfor %}
-            </tbody>
+            </tbody>       
         </table>
+    </div>
     </body>
 </html>
