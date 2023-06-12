@@ -1,5 +1,5 @@
 from django.shortcuts import render
-# from django.http import HttpResponse
+from django.http import Http404
 from .models import Forum
 
 
@@ -10,6 +10,9 @@ def home(request):
 
 
 def forum_topics(request, pk):
-    """renders page containing forums"""
-    forum = Forum.objects.get(pk=pk)
+    """renders page containing forums or raises"""
+    try:
+        forum = Forum.objects.get(pk=pk)
+    except:
+        raise Http404
     return render(request, 'topics.html', {'forum': forum})
