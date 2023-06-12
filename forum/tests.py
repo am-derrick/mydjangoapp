@@ -7,7 +7,7 @@ from .models import Forum
 class HomepageTests(TestCase):
     def setUp(self):
         """creates a forum instance"""
-        Forum.objects.create(
+        self.forum = Forum.objects.create(
             name="Banter", description="This forum is about random banter.")
         url = reverse('home')
         self.response = self.client.get(url)
@@ -21,12 +21,19 @@ class HomepageTests(TestCase):
         view = resolve('/')
         self.assertEquals(view.func, home)
 
-    def test_home_view_contains_link_to_topics_page(self):
+    def test_home_view_links_to_topics_page(self):
         """tests navigation links to topics page"""
         forum_topics_url = reverse(
             'forum_topics', kwargs={'pk': self.forum.pk})
         self.assertContains(
             self.response, 'href="{0}"'.format(forum_topics_url))
+
+    def test_forum_topics_view_links_to_homepage(self):
+        """tests navigation links from topics page back to home page"""
+        forum_topics_url = reverse('forum_topics', kwargs={'pk': 1})
+        response = self.client.get(forum_topics_url)
+        hompage_url = reverse('home')
+        self.assertContains(response, 'href="{0}"'.format(hompage_url))
 
 
 class ForumTopicsTests(TestCase):
