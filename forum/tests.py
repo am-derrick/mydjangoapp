@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 from .views import home, forum_topics, new_topic
-from .models import Forum
+from .models import Forum, Topic, Post
+from django.contrib.auth.models import User
 
 
 class HomepageTests(TestCase):
@@ -64,9 +65,7 @@ class ForumTopicsTests(TestCase):
         forum_topics_url = reverse('forum_topics', kwargs={'pk': 1})
         hompage_url = reverse('home')
         new_topic_url = reverse('new_topic', kwargs={'pk': 1})
-
         response = self.client.get(forum_topics_url)
-
         self.assertContains(response, 'href="{0}"'.format(hompage_url))
         self.assertContains(response, 'href="{0}"'.format(new_topic_url))
 
@@ -76,6 +75,8 @@ class NewTopicTests(TestCase):
         """creates a new topics instance"""
         Forum.objects.create(
             name='Banter', description='This forum is about random banter.')
+        User.objects.create_user(
+            username='john', email='john@doe.com', password='pass')
 
     def test_new_topic_view_success_status_code(self):
         """test case for success of new_topics page"""
@@ -100,3 +101,44 @@ class NewTopicTests(TestCase):
         forum_topics_url = reverse('forum_topics', kwargs={'pk': 1})
         response = self.client.get(new_topic_url)
         self.assertContains(response, 'href="{0}"'.format(forum_topics_url))
+
+    def test_csrf(self):
+        """tests that cross site request forgery token is present"""
+        url = reverse('new_topic', kwargs={'pk': 1})
+        response = self.client.get(url)
+        self.assertContains(response, 'csrfmiddlewaretoken')
+
+    def test_new_topic_valid_post(self):
+        """tests that the post contains valid data"""
+        url = reverse('new_topic', kwargs={'pk': 1})
+        data = {
+            'subject': 'Test subject',
+            'message': 'Some random text'
+        }
+        response = self.client.post(url, data)
+        self.assertTrue(Topic.objects.exists())
+        self.assertTrue(Post.objects.exists())
+
+    def test_new_topic_invalid_post(self):
+        """
+        test case for when the post contains invalid data
+        when invalid, no redirection but the form should show with errors
+        """
+        url = reverse('new_topic', kwargs={'pk': 1})
+        response = self.client.post(url, {})
+        self.assertEquals(response.status_code, 200)
+
+    def test_new_topic_empty_fields(self):
+        """
+        test case for when the post contains empty data
+        when invalid, no redirection but the form should show with errors        
+        """
+        url = reverse('new_topic', kwargs={'pk': 1})
+        data = {
+            'subject': '',
+            'message': ''
+        }
+        response = self.client.post(url, data)
+        self.assertEquals(response.status_code, 200)
+        self.assertFalse(Topic.objects.exists())
+        self.assertFalse(Post.objects.exists())
