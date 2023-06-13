@@ -10,5 +10,26 @@
 {% endblock %}
 
 {% block content %}
-    <!-- to be used later -->
+    <table class="table">
+        <thead class="thead-inverse">
+            <tr>
+                <th>Topic</th>
+                <th>Opener</th>
+                <th>Replies</th>
+                <th>Seen</th>
+                <th>Last Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for topic in forum.topics.all %}
+                <tr>
+                    <td>{{ topic.subject }}</td>
+                    <td>{{ topic.opener.username }}</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>{{ topic.last_updated }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
