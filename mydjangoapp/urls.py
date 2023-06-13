@@ -22,5 +22,6 @@ from forum import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('forum/<int:pk>/', views.forum_topics, name='forum_topics'),
+    path('forum/<int:pk>/new/', views.new_topic, name='new_topic'),
     path('admin/', admin.site.urls),
 ]
