@@ -3,9 +3,20 @@
     <head>
         <meta charset-"utf-8">
         <title>{% block title %}Forum{% endblock %}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Moirai+One&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/app.css' %}">
     </head>
     <body>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'home' %}">My Forum</a>
+            </div>
+        </nav>
+
         <div class="container">
             <ol class="breadcrumb my-4">
                 {% block breadcrumb %}
