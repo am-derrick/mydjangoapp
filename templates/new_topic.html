@@ -12,11 +12,11 @@
     <form method="post">
         {% csrf_token %}
         <div class="form-group">
-            <label for="id_theme">Enter your Theme</label>
+            <label for="id_theme">Theme</label>
             <input type="text" class="form-control" id="id_theme" name="theme">
         </div>
         <div class="form-group">
-            <label for="id_message">Type your Message</label>
+            <label for="id_message">Message</label>
             <textarea class="form-control" id="id_message" name="message" rows="5"></textarea>
         </div>
         <button type="submit" class="btn btn-success">Post</button>
