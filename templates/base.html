@@ -3,7 +3,7 @@
     <head>
         <meta charset-"utf-8">
         <title>{% block title %}Forum{% endblock %}</title>
-        <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     </head>
     <body>
         <div class="container">
@@ -11,7 +11,7 @@
                 {% block breadcrumb %}
                 {% endblock %}
             </ol>
-            {% block element %}
+            {% block content %}
             {% endblock %}
         </div>
     </body>
