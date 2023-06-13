@@ -20,13 +20,13 @@ def new_topic(request, pk):
     forum = get_object_or_404(Forum, pk=pk)
 
     if request.method == 'POST':
-        theme = request.POST['theme']
+        subject = request.POST['subject']
         message = request.POST['message']
 
         user = User.objects.first()  # TODO: implement later, get user logged in
 
         topic = Topic.objects.create(
-            subject=theme,
+            subject=subject,
             forum=forum,
             opener=user
         )
