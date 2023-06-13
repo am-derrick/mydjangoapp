@@ -59,6 +59,17 @@ class ForumTopicsTests(TestCase):
         view = resolve('/forum/1/')
         self.assertEquals(view.func, forum_topics)
 
+    def test_forum_topics_view_has_nav_links(self):
+        """tests navigation links on topics page to home and to new_topics page"""
+        forum_topics_url = reverse('forum_topics', kwargs={'pk': 1})
+        hompage_url = reverse('home')
+        new_topic_url = reverse('new_topic', kwargs={'pk': 1})
+
+        response = self.client.get(forum_topics_url)
+
+        self.assertContains(response, 'href="{0}"'.format(hompage_url))
+        self.assertContains(response, 'href="{0}"'.format(new_topic_url))
+
 
 class NewTopicTests(TestCase):
     def setUp(self):
