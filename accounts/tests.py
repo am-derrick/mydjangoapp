@@ -29,6 +29,16 @@ class SignUpTests(TestCase):
         form = self.response.context.get('form')
         self.assertIsInstance(form, SignUpForm)
 
+    def test_form_inputs(self):
+        """
+        tests the input accepted in the sign up form
+        must contain username, email, password1, password2, crsf token
+        """
+        self.assertContains(self.response, 'type="text" ', 1)
+        self.assertContains(self.response, 'type="email" ', 1)
+        self.assertContains(self.response, 'type="password"', 2)
+        self.assertContains(self.response, '<input', 5)
+
 
 class SuccessSignUpTests(TestCase):
     def setUp(self):
