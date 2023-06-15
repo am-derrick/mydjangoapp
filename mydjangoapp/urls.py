@@ -18,9 +18,11 @@ from django.contrib import admin
 from django.urls import path
 
 from forum import views
+from accounts import views as accounts_views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('signup/', accounts_views.signup, name='signup'),
     path('forum/<int:pk>/', views.forum_topics, name='forum_topics'),
     path('forum/<int:pk>/new/', views.new_topic, name='new_topic'),
     path('admin/', admin.site.urls),
