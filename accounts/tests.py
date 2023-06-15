@@ -58,3 +58,23 @@ class SuccessSignUpTests(TestCase):
         response = self.client.get(self.home_url)
         user = response.context.get('user')
         self.assertTrue(user.is_authenticated)
+
+
+class InvalidSignUpTests(TestCase):
+    def setUp(self):
+        """intialises test cases for invalid sign ups"""
+        url = reverse('signup')
+        self.response = self.client.post(url, {})
+
+    def test_signup_status_code(self):
+        """when sign up is invalid, returns to the same page"""
+        self.assertEquals(self.response.status_code, 200)
+
+    def test_form_errors(self):
+        """tests that form has errors on invalid sign up"""
+        form = self.response.context.get('form')
+        self.assertTrue(form.errors)
+
+    def test_user_not_created(self):
+        """tests that on invalid sign up, user object isn't created"""
+        self.assertFalse(User.objects.exists())
