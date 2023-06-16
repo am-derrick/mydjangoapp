@@ -19,11 +19,11 @@ from django.urls import path
 
 from forum import views
 from accounts import views as accounts_views
-from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('/logout/', auth_views.LogoutViews.as_view(), name='logout'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('signup/', accounts_views.signup, name='signup'),
     path('forum/<int:pk>/', views.forum_topics, name='forum_topics'),
     path('forum/<int:pk>/new/', views.new_topic, name='new_topic'),
