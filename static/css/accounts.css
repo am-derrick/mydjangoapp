@@ -1,9 +1,10 @@
 body {
-    background-image: url(../img/connectwork.png);
+    background-image: url(../img/vintage-wallpaper.png);
 }
 
 .logo {
     font-family: 'Moirai One', cursive;
+    font-weight: 500;
 }
 
 .logo a {
