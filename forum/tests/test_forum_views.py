@@ -1,8 +1,9 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
-from .views import home, forum_topics, new_topic
-from .models import Forum, Topic, Post
+from ..views import home, forum_topics, new_topic
+from ..models import Forum, Topic, Post
 from django.contrib.auth.models import User
+from ..forms import NewTopicForm
 
 
 class HomepageTests(TestCase):
