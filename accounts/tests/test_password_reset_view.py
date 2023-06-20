@@ -44,8 +44,8 @@ class InvalidPasswordResetTests(TestCase):
 
     def test_redirection(self):
         """tests that invalid emails redirect to password_reset_done view"""
-        url = reverse('password_reset_done')
-        self.assertRedirects(self.response, url)
+        redirection_url = reverse('password_reset_done')
+        self.assertRedirects(self.response, redirection_url)
 
     def test_no_reset_email_sent(self):
         """tests that when emailis invalid, no email is sent"""
