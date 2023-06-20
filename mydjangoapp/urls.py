@@ -26,6 +26,10 @@ urlpatterns = [
          name='password_reset_confirm'),
     path('reset/complete/', PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
          name='password_reset_complete'),
+    path('settings/password/', PasswordChangeView.as_view(
+        template_name='password_change.html'), name='password_change'),
+    path('settings/password/done/', PasswordChangeDoneView.as_view(
+        template_name='password_change_done.html'), name="password_change_done"),
     path('forum/<int:pk>/', views.forum_topics, name='forum_topics'),
     path('forum/<int:pk>/new/', views.new_topic, name='new_topic'),
     path('admin/', admin.site.urls),
