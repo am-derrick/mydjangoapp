@@ -19,7 +19,8 @@ from django.urls import path
 
 from forum import views
 from accounts import views as accounts_views
-from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView
+from django.contrib.auth.views import (LogoutView, LoginView, PasswordResetView,
+                                       PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView)
 
 urlpatterns = [
     path('', views.home, name='home'),
