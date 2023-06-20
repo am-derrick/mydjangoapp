@@ -1,4 +1,4 @@
-from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.models import User
 from django.core import mail
@@ -50,3 +50,19 @@ class InvalidPasswordResetTests(TestCase):
     def test_no_reset_email_sent(self):
         """tests that when emailis invalid, no email is sent"""
         self.assertEqual(0, len(mail.outbox))
+
+
+class PasswordResetDoneTests(TestCase):
+    def setUp(self):
+        """initialises tests for when password reset is done"""
+        url = reverse('password_reset_done')
+        self.response = self.client.get(url)
+
+    def test_status_code(self):
+        """tests success status code"""
+        self.assertEquals(self.response.status_code, 200)
+
+    def test_view_function(self):
+        """tests password reset done view func"""
+        view = resolve('/reset/done/')
+        self.assertEquals(view.func.view_class, PasswordResetDoneView)
