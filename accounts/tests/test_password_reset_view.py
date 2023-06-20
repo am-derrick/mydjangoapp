@@ -1,5 +1,5 @@
 from django.contrib.auth.views import (PasswordResetView, PasswordResetDoneView,
-                                       PasswordResetConfirmView)
+                                       PasswordResetConfirmView, PasswordResetCompleteView)
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth.models import User
 from django.core import mail
@@ -139,3 +139,19 @@ class InvalidPasswordResetConfirmTests(TestCase):
         self.assertContains(self.response, 'Password reset link invalid')
         self.assertContains(
             self.response, 'href="{0}"'.format(password_reset_url))
+
+
+class PasswordResetCompleteTests(TestCase):
+    def setUp(self):
+        """intialises the tests for password reset complete"""
+        url = reverse('password_reset_complete')
+        self.response = self.client.get(url)
+
+    def test_status_code(self):
+        """tests success status code"""
+        self.assertEquals(self.response.status_code, 200)
+
+    def test_view_function(self):
+        """tests view function for password reser complete"""
+        view = resolve('/reset/complete/')
+        self.assertEquals(view.func.view_class, PasswordResetCompleteView)
