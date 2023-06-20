@@ -137,3 +137,6 @@ LOGIN_REDIRECT_URL = 'home'
 
 # Emails logged when password resetting
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# login URL, users redirected here if not logged in or authenticated
+LOGIN_URL = 'login'
