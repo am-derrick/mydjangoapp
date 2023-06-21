@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Forum, Topic, Post
 from django.contrib.auth.models import User
 from .forms import NewTopicForm
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -16,6 +17,7 @@ def forum_topics(request, pk):
     return render(request, 'topics.html', {'forum': forum})
 
 
+@login_required
 def new_topic(request, pk):
     """renders page where a user can add a new topic"""
     forum = get_object_or_404(Forum, pk=pk)
