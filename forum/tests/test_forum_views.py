@@ -78,6 +78,7 @@ class NewTopicTests(TestCase):
             name='Banter', description='This forum is about random banter.')
         User.objects.create_user(
             username='john', email='john@doe.com', password='pass')
+        self.client.login(username='john', password='pass')
 
     def test_new_topic_view_success_status_code(self):
         """test case for success of new_topics page"""
@@ -137,7 +138,7 @@ class NewTopicTests(TestCase):
         url = reverse('new_topic', kwargs={'pk': 1})
         data = {
             'subject': '',
-            'message': ''
+            'message': '',
         }
         response = self.client.post(url, data)
         self.assertEquals(response.status_code, 200)
@@ -147,7 +148,7 @@ class NewTopicTests(TestCase):
     def test_contains_form(self):
         """test to verify new_topic contains form"""
         url = reverse('new_topic', kwargs={'pk': 1})
-        response = self.client.post(url, {})
+        response = self.client.get(url)
         form = response.context.get('form')
         self.assertEquals(response.status_code, 200)
-        self.assertTrue(form.errors)
+        self.assertIsInstance(form, NewTopicForm)
