@@ -82,7 +82,7 @@ class PasswordResetConfirmTests(TestCase):
         """
         user = User.objects.create_user(
             username='john', email='john@doe.com', password='123abc')
-        self.uid = urlsafe_base64_encode(force_bytes(user.pk)).decode()
+        self.uid = urlsafe_base64_encode(force_bytes(user.pk))
         self.token = default_token_generator.make_token(user)
         url = reverse('password_reset_confirm', kwargs={
                       'uidb64': self.uid, 'token': self.token})
@@ -118,7 +118,7 @@ class InvalidPasswordResetConfirmTests(TestCase):
         """initialises invalid password reset confirm tests"""
         user = User.objects.create_user(
             username="john", email="john@doe.com", password="123abc")
-        uid = urlsafe_base64_encode(force_bytes(user.pk)).decode()
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
         user.set_password('456xyz')  # change password to invalidate token
         user.save
