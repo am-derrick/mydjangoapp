@@ -8,10 +8,12 @@ from django.contrib.auth.forms import PasswordChangeForm
 class PasswordChangeTests(TestCase):
     def setUp(self):
         """intialises password chnage view tests"""
+        username = 'john'
+        password = 'abdc1234'
         user = User.objects.create_user(
-            username='john', email='john@doe.com', password='abdc1234')
+            username=username, email='john@doe.com', password=password)
         url = reverse('password_change')
-        self.client.login(username='john', password='abcd1234')
+        self.client.login(username=username, password=password)
         self.response = self.client.get(url)
 
     def test_status_code(self):
