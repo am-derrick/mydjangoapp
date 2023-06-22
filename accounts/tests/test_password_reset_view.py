@@ -100,7 +100,7 @@ class PasswordResetConfirmTests(TestCase):
 
     def test_contains_csrf(self):
         """tests that view has csrf token"""
-        self.assertContains(self.response, 'csrfmiddletoken')
+        self.assertContains(self.response, 'csrfmiddlewaretoken')
 
     def test_contains_form(self):
         """tests that password rest confirm view has set password form"""
