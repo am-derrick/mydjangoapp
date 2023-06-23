@@ -27,7 +27,7 @@
         <tbody>
             {% for topic in forum.topics.all %}
                 <tr>
-                    <td>{{ topic.subject }}</td>
+                    <td><href="{% url 'topic_posts' forum.pk topic.pk %}">{{ topic.subject }}</a></td>
                     <td>{{ topic.opener.username }}</td>
                     <td>0</td>
                     <td>0</td>
