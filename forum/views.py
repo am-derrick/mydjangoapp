@@ -37,3 +37,9 @@ def new_topic(request, pk):
     else:
         form = NewTopicForm()
     return render(request, 'new_topic.html', {'forum': forum, 'form': form})
+
+
+def topic_posts(request, pk, topic_pk):
+    """renders page containing topic posts"""
+    topic = get_object_or_404(Topic, forum_pk=pk, pk=topic_pk)
+    return render(request, 'topic_posts.html', {'topic': topic})
