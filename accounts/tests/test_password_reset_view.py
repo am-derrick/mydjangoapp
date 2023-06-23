@@ -117,7 +117,7 @@ class InvalidPasswordResetConfirmTests(TestCase):
     def setUp(self):
         """initialises invalid password reset confirm tests"""
         user = User.objects.create_user(
-            username="john", email="john@doe.com", password="123abc")
+            username='john', email='john@doe.com', password='123abc')
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
         user.set_password('456xyz')  # change password to invalidate token
