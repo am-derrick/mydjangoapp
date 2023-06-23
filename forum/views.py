@@ -21,21 +21,18 @@ def forum_topics(request, pk):
 def new_topic(request, pk):
     """renders page where a user can add a new topic"""
     forum = get_object_or_404(Forum, pk=pk)
-    user = User.objects.first()  # TODO: implement, get user logged in
-
     if request.method == 'POST':
         form = NewTopicForm(request.POST)
         if form.is_valid():
             topic = form.save(commit=False)
             topic.forum = forum
-            topic.opener = user
+            topic.opener = request.user
             topic.save()
-            post = Post.objects.create(
+            Post.objects.create(
                 message=form.cleaned_data.get('message'),
                 topic=topic,
-                created_by=user
+                created_by=request.user
             )
-            # TODO: redirect to the created topic page
             return redirect('forum_topics', pk=forum.pk)
     else:
         form = NewTopicForm()
