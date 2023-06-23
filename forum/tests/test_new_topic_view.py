@@ -87,3 +87,20 @@ class NewTopicTests(TestCase):
         form = response.context.get('form')
         self.assertEquals(response.status_code, 200)
         self.assertIsInstance(form, NewTopicForm)
+
+
+class LoginRequiredTests(TestCase):
+    def setUp(self):
+        """initialises tests login required for new topic view"""
+        Forum.objects.create(
+            name='Banter', description='This forum is about random banter.')
+        self.url = reverse('new_topic', kwargs={'pk': 1})
+        self.response = self.client.get(self.url)
+
+    def test_redirection(self):
+        """
+        tests that redirection to login page
+        when a user tries to add a new topic and not authorised
+        """
+        login_url = reverse('login')
+        self.assertRedirects(self.response, f'{login_url}?next={self.url}')
