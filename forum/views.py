@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Forum, Topic, Post
-from django.contrib.auth.models import User
-from .forms import NewTopicForm
+from .forms import NewTopicForm, PostForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -22,24 +21,41 @@ def new_topic(request, pk):
     """renders page where a user can add a new topic"""
     forum = get_object_or_404(Forum, pk=pk)
     if request.method == 'POST':
-        form = NewTopicForm(request.POST)
-        if form.is_valid():
-            topic = form.save(commit=False)
+        new_form = NewTopicForm(request.POST)
+        if new_form.is_valid():
+            topic = new_form.save(commit=False)
             topic.forum = forum
             topic.opener = request.user
             topic.save()
             Post.objects.create(
-                message=form.cleaned_data.get('message'),
+                message=new_form.cleaned_data.get('message'),
                 topic=topic,
                 created_by=request.user
             )
-            return redirect('forum_topics', pk=forum.pk)
+            return redirect('topic_posts', pk=pk, topic_pk=topic.pk)
     else:
-        form = NewTopicForm()
-    return render(request, 'new_topic.html', {'forum': forum, 'form': form})
+        new_form = NewTopicForm()
+    return render(request, 'new_topic.html', {'forum': forum, 'form': new_form})
 
 
 def topic_posts(request, pk, topic_pk):
     """renders page containing topic posts"""
     topic = get_object_or_404(Topic, forum__pk=pk, pk=topic_pk)
     return render(request, 'topic_posts.html', {'topic': topic})
+
+
+@login_required
+def reply_post(request, pk, topic_pk):
+    """renders page containing reply to topic posts"""
+    topic = get_object_or_404(Topic, forum__pk=pk, pk=topic_pk)
+    if request.method == 'POST':
+        reply_form = PostForm(request.POST)
+        if reply_form.is_valid():
+            post = reply_form.save(commit=False)
+            post.topic = topic
+            post.created_by = request.user
+            post.save()
+            return redirect('topic_posts', pk=pk, topic_pk=topic_pk)
+        else:
+            reply_form = PostForm()
+        return render(request, 'reply_post.html', {'topic': topic, 'form': reply_form})
