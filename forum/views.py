@@ -45,7 +45,7 @@ def topic_posts(request, pk, topic_pk):
 
 
 @login_required
-def reply_post(request, pk, topic_pk):
+def reply(request, pk, topic_pk):
     """renders page containing reply to topic posts"""
     topic = get_object_or_404(Topic, forum__pk=pk, pk=topic_pk)
     if request.method == 'POST':
@@ -56,6 +56,6 @@ def reply_post(request, pk, topic_pk):
             post.created_by = request.user
             post.save()
             return redirect('topic_posts', pk=pk, topic_pk=topic_pk)
-        else:
-            reply_form = PostForm()
-        return render(request, 'reply_post.html', {'topic': topic, 'form': reply_form})
+    else:
+        reply_form = PostForm()
+    return render(request, 'reply.html', {'topic': topic, 'form': reply_form})
