@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.next import Truncator
 
 
 class Forum(models.Model):
@@ -20,6 +21,9 @@ class Topic(models.Model):
     opener = models.ForeignKey(
         User, related_name='topics', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.subject
+
 
 class Post(models.Model):
     """class representing a post on the forum"""
@@ -32,3 +36,7 @@ class Post(models.Model):
         User, related_name='posts', on_delete=models.CASCADE)
     updated_by = models.ForeignKey(
         User, null=True, related_name='+', on_delete=models.CASCADE)
+
+    def __str__(self):
+        short_message = Truncator(self.message)
+        return short_message.chars(30)
