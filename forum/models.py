@@ -17,7 +17,7 @@ class Forum(models.Model):
 
     def get_most_previous_post(self):
         """returns the last post"""
-        return Post.objects.filter(topic__board=self).order_by('-created_at').first()
+        return Post.objects.filter(topic__forum=self).order_by('-created_at').first()
 
 
 class Topic(models.Model):
