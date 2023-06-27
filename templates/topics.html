@@ -30,7 +30,7 @@
                     <td><href="{% url 'topic_posts' forum.pk topic.pk %}">{{ topic.subject }}</a></td>
                     <td>{{ topic.opener.username }}</td>
                     <td>{{ topic.replies }}</td>
-                    <td>0</td>
+                    <td>{{ topic.views }}</td>
                     <td>{{ topic.last_updated }}</td>
                 </tr>
             {% endfor %}
