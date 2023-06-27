@@ -11,6 +11,14 @@ class Forum(models.Model):
     def __str__(self):
         return self.name
 
+    def get_posts_number(self):
+        """returns number of posts"""
+        return Post.objects.filter(topic__forum=self).count()
+
+    def get_most_previous_post(self):
+        """returns the last post"""
+        return Post.objects.filter(topic__board=self).order_by('-created_at').first()
+
 
 class Topic(models.Model):
     """class representing topic under a forum"""
