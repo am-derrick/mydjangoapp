@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Forum, Topic, Post
 from .forms import NewTopicForm, PostForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 
 
 def home(request):
@@ -13,7 +14,9 @@ def home(request):
 def forum_topics(request, pk):
     """renders page containing forums"""
     forum = get_object_or_404(Forum, pk=pk)
-    return render(request, 'topics.html', {'forum': forum})
+    topics = forum.topics.order_by(
+        '-last_updated').annotate(replies=Count('posts') - 1)
+    return render(request, 'topics.html', {'forum': forum, 'topics': topics})
 
 
 @login_required
