@@ -3,6 +3,8 @@ from .models import Forum, Topic, Post
 from .forms import NewTopicForm, PostForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
+from django.views.generic import UpdateView
+from django.utils import timezone
 
 
 def home(request):
@@ -64,3 +66,19 @@ def reply(request, pk, topic_pk):
     else:
         reply_form = PostForm()
     return render(request, 'reply.html', {'topic': topic, 'form': reply_form})
+
+
+class PostUpdateView(UpdateView):
+    """class for updating post, extends from the generic views - UpdateView"""
+    model = Post
+    fields = ('message', )
+    template_name = 'edit.html'
+    pk_url_kwarg = 'post_pk'
+    context_object_name = 'post'
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.updated_by = self.request.user
+        post.updated_at = timezone.now()
+        post.save()
+        return redirect('topic_posts', pk=post.topic.forum.pk, topic_pk=post.topic.pk)
