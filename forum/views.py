@@ -20,7 +20,7 @@ def forum_topics(request, pk):
     """renders page containing forums"""
     forum = get_object_or_404(Forum, pk=pk)
     queryset = forum.topics.order_by(
-        '-last_updated').annotate(replies=Count('posts'))
+        '-last_updated').annotate(replies=Count('posts') - 1)
     # page 1
     page = request.GET.get('page', 1)
     # paginate to show 25 posts
