@@ -6,6 +6,7 @@ from django.db.models import Count
 from django.views.generic import UpdateView, ListView
 from django.utils import timezone
 from django.utils.decorators import method_decorator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class ForumListView(ListView):
@@ -18,8 +19,22 @@ class ForumListView(ListView):
 def forum_topics(request, pk):
     """renders page containing forums"""
     forum = get_object_or_404(Forum, pk=pk)
-    topics = forum.topics.order_by(
-        '-last_updated').annotate(replies=Count('posts') - 1)
+    queryset = forum.topics.order_by(
+        '-last_updated').annotate(replies=Count('posts'))
+    # page 1
+    page = request.GET.get('page', 1)
+    # paginate to show 25 posts
+    paginator = Paginator(queryset, 25)
+
+    try:
+        topics = paginator.page(page)
+    except PageNotAnInteger:
+        # go back to page 1
+        topics = paginator.page(1)
+    except EmptyPage:
+        # go to last page
+        topics = paginator.page(paginator.num_pages)
+
     return render(request, 'topics.html', {'forum': forum, 'topics': topics})
 
 
