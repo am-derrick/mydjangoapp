@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.views.generic import UpdateView
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 
 
 def home(request):
@@ -68,6 +69,7 @@ def reply(request, pk, topic_pk):
     return render(request, 'reply.html', {'topic': topic, 'form': reply_form})
 
 
+@method_decorator(login_required, name='dispatch')
 class PostUpdateView(UpdateView):
     """class for updating post, extends from the generic views - UpdateView"""
     model = Post
