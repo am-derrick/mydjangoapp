@@ -1,19 +1,18 @@
-from typing import Any
-from django.db import models
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Forum, Topic, Post
 from .forms import NewTopicForm, PostForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, ListView
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 
 
-def home(request):
-    """renders home page view"""
-    forums = Forum.objects.all()
-    return render(request, 'home.html', {'forums': forums})
+class ForumListView(ListView):
+    """class for home view, extends from the generic views - ListView"""
+    model = Forum
+    context_object_name = 'forums'
+    template_name = 'home.html'
 
 
 def forum_topics(request, pk):

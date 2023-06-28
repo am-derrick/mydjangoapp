@@ -12,7 +12,7 @@ from django.contrib.auth.views import (LogoutView, LoginView, PasswordResetView,
 
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.ForumListView.as_view(), name='home'),
     path('login/', LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('signup/', accounts_views.signup, name='signup'),
