@@ -1,10 +1,10 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
-from ..views import home
+from ..views import ForumListView
 from ..models import Forum
 
 
-class HomepageTests(TestCase):
+class HomeTests(TestCase):
     def setUp(self):
         """creates a forum instance"""
         self.forum = Forum.objects.create(
@@ -17,9 +17,9 @@ class HomepageTests(TestCase):
         self.assertEquals(self.response.status_code, 200)
 
     def test_home_url_resolves_home_view(self):
-        """checks to resolve / url to the home view"""
+        """tests that page view func matched ForumListView"""
         view = resolve('/')
-        self.assertEquals(view.func, home)
+        self.assertEquals(view.func.view_class, ForumListView)
 
     def test_home_view_links_to_topics_page(self):
         """tests navigation links to topics page"""
