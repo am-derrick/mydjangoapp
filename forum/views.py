@@ -1,3 +1,5 @@
+from typing import Any
+from django.db import models
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Forum, Topic, Post
 from .forms import NewTopicForm, PostForm
@@ -77,6 +79,10 @@ class PostUpdateView(UpdateView):
     template_name = 'edit.html'
     pk_url_kwarg = 'post_pk'
     context_object_name = 'post'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(created_by=self.request.user)
 
     def form_valid(self, form):
         post = form.save(commit=False)
