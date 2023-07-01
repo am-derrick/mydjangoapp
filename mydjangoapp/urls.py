@@ -33,7 +33,7 @@ urlpatterns = [
     path('forum/<int:pk>/topics/<int:topic_pk>/reply/',
          views.reply, name='reply'),
     path('forum/<int:pk>/topics/<int:topic_pk>/',
-         views.PostListView, name='topic_posts'),
+         views.PostListView.as_view(), name='topic_posts'),
     path('forum/<int:pk>/', views.TopicListView.as_view(), name='forum_topics'),
     path('forum/<int:pk>/new/', views.new_topic, name='new_topic'),
     path('forum/<int:pk>/topics/<int:topic_pk>/posts/<int:post_pk>/edit/',

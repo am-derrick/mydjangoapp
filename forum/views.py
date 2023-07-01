@@ -1,5 +1,3 @@
-from typing import Any
-from django.db.models.query import QuerySet
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Forum, Topic, Post
 from .forms import NewTopicForm, PostForm
@@ -8,7 +6,6 @@ from django.db.models import Count
 from django.views.generic import UpdateView, ListView
 from django.utils import timezone
 from django.utils.decorators import method_decorator
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class ForumListView(ListView):
@@ -65,7 +62,7 @@ class PostListView(ListView):
     template_name = 'topic_posts.html'
     paginate_by = 2
 
-    def get_contest_data(self, **kwargs):
+    def get_context_data(self, **kwargs):
         self.topic.views += 1
         self.topic.save()
         kwargs['topic'] = self.topic
