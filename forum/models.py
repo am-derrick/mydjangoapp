@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.text import Truncator
 from django.utils.html import mark_safe
 from markdown import markdown
+import math
 
 
 class Forum(models.Model):
@@ -34,6 +35,11 @@ class Topic(models.Model):
 
     def __str__(self):
         return self.subject
+
+    def get_page_count(self):
+        count = self.posts.count()
+        pages = count / 20
+        return math.ceil(pages)
 
 
 class Post(models.Model):
