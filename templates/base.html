@@ -8,6 +8,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Moirai+One&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/app.css' %}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
         {% block stylesheet %}{% endblock %}
     </head>
     <body>
@@ -58,5 +60,6 @@
         <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
         <script src="{% static 'js/popper.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        {% block javascript %}{% endblock %}
     </body>
 </html>

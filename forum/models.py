@@ -52,5 +52,5 @@ class Post(models.Model):
         short_message = Truncator(self.message)
         return short_message.chars(30)
 
-    def get_markdown(self):
+    def markdown_message(self):
         return mark_safe(markdown(self.message, safe_mode='escape'))
