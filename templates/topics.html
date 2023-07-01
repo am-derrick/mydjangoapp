@@ -14,7 +14,7 @@
         <a href="{% url 'new_topic' forum.pk %}" class="btn btn-primary">Create new topic</a>
     </div>
 
-    <table class="table">
+    <table class="table mb-4">
         <thead class="thead-inverse">
             <tr>
                 <th>Topic</th>
@@ -26,8 +26,13 @@
         </thead>
         <tbody>
             {% for topic in forum.topics.all %}
+                {% url 'topic_posts' forum.pk topic.pk as topic_url %}
                 <tr>
-                    <td><href="{% url 'topic_posts' forum.pk topic.pk %}">{{ topic.subject }}</a></td>
+                    <td>
+                        <p class="mb-0">
+                        <a href="{{ topic_url }}">{{ topic.subject }}</a>
+                        </p>
+                    </td>
                     <td>{{ topic.opener.username }}</td>
                     <td>{{ topic.replies }}</td>
                     <td>{{ topic.views }}</td>
