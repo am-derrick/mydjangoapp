@@ -34,7 +34,7 @@ urlpatterns = [
          views.reply, name='reply'),
     path('forum/<int:pk>/topics/<int:topic_pk>/',
          views.topic_posts, name='topic_posts'),
-    path('forum/<int:pk>/', views.forum_topics, name='forum_topics'),
+    path('forum/<int:pk>/', views.TopicListView.as_view(), name='forum_topics'),
     path('forum/<int:pk>/new/', views.new_topic, name='new_topic'),
     path('forum/<int:pk>/topics/<int:topic_pk>/posts/<int:post_pk>/edit/',
          views.PostUpdateView.as_view(), name='edit'),

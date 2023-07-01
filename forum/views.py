@@ -1,3 +1,5 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Forum, Topic, Post
 from .forms import NewTopicForm, PostForm
@@ -16,26 +18,22 @@ class ForumListView(ListView):
     template_name = 'home.html'
 
 
-def forum_topics(request, pk):
-    """renders page containing forums"""
-    forum = get_object_or_404(Forum, pk=pk)
-    queryset = forum.topics.order_by(
-        '-last_updated').annotate(replies=Count('posts') - 1)
-    # page 1
-    page = request.GET.get('page', 1)
-    # paginate to show 25 posts
-    paginator = Paginator(queryset, 25)
+class TopicListView(ListView):
+    """class for forum topics, extends from the generic views - ListView"""
+    model = Topic
+    context_object_name = 'topics'
+    template_name = 'topics.html'
+    paginate_by = 25
 
-    try:
-        topics = paginator.page(page)
-    except PageNotAnInteger:
-        # go back to page 1
-        topics = paginator.page(1)
-    except EmptyPage:
-        # go to last page
-        topics = paginator.page(paginator.num_pages)
+    def get_context_data(self, **kwargs):
+        kwargs['forum'] = self.forum
+        return super().get_context_data(**kwargs)
 
-    return render(request, 'topics.html', {'forum': forum, 'topics': topics})
+    def get_queryset(self):
+        self.forum = get_object_or_404(Forum, pk=self.kwargs.get('pk'))
+        queryset = self.forum.topics.order_by(
+            '-last_updated').annotate(replies=Count('posts') - 1)
+        return queryset
 
 
 @login_required
