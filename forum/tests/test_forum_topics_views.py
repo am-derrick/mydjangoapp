@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
-from ..views import forum_topics
+from ..views import TopicListView
 from ..models import Forum
 
 
@@ -25,7 +25,7 @@ class ForumTopicsTests(TestCase):
     def test_forum_topics_url_resolves_forum_topics_view(self):
         """tests forum_topics url"""
         view = resolve('/forum/1/')
-        self.assertEquals(view.func, forum_topics)
+        self.assertEquals(view.func, TopicListView)
 
     def test_forum_topics_view_has_nav_links(self):
         """tests navigation links on topics page to home and to new_topics page"""
