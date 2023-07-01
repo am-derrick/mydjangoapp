@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import Truncator
+from django.utils.html import mark_safe
+from markdown import markdown
 
 
 class Forum(models.Model):
@@ -49,3 +51,6 @@ class Post(models.Model):
     def __str__(self):
         short_message = Truncator(self.message)
         return short_message.chars(30)
+
+    def get_markdown(self):
+        return mark_safe(markdown(self.message, safe_mode='escape'))
