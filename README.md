@@ -8,7 +8,8 @@
 ## Demo
 
 Watch the demo [here.](https://youtu.be/KR2RB8S00Og)
-App hosted on Digital Ocean using Nginx Server under domain name [theforumxyz.xyz](http://theforumxyz.xyz)
+
+App hosted on Digital Ocean using Nginx Server under domain name [theforumxyz.xyz](http://theforumxyz.xyz) 🚧
 
 ## Running the Project Locally
 
