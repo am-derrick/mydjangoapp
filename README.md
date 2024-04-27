@@ -26,6 +26,7 @@ pip install -r requirements.txt
 ```
 
 Setup the local configurations:
+The example involved assumes your environmental variables are saved in the ```.env.example``` file. Transfer them to a file named ```.env```.
 
 ```bash
 cp .env.example .env
